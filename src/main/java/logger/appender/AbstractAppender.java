@@ -8,14 +8,12 @@ public abstract class AbstractAppender implements Appender {
 
     @Override
     public void doAppend(LogEvent logEvent){
-
         if(!finish){
             finish = true;
-
-
-
+            this.append(logEvent);
         }
-
     }
+
+    abstract protected void append(LogEvent logEvent);
 
 }

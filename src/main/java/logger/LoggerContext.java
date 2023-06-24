@@ -6,4 +6,5 @@ public interface LoggerContext {
 
     Logger setLogger(String name, Logger logger);
 
+    boolean hasLogger(String name);
 }
