@@ -1,7 +1,14 @@
 package logger.joran;
 
-public class module {
+import java.util.LinkedList;
+import java.util.List;
 
-    private String 
+public class Model {
+
+    private String tag;
+
+    private String bodyText;
+
+    private List<Model> subModelList = new LinkedList<>();
 
 }

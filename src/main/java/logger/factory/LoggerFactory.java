@@ -3,6 +3,7 @@ package logger.factory;
 import logger.DefaultLoggerContext;
 import logger.Logger;
 import logger.LoggerContext;
+import logger.joran.ContextInitializer;
 
 public class LoggerFactory {
 
@@ -20,6 +21,7 @@ public class LoggerFactory {
     private static void checkInitialization(){
         if(STATUS == UNINITIALIZED){
             loggerContext = new DefaultLoggerContext();
+            new ContextInitializer(loggerContext).initialize();
             STATUS = INITIALIZED;
         }
     }
