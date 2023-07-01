@@ -3,6 +3,7 @@ package logger;
 import logger.appender.Appender;
 import logger.appender.AppenderAttachableImpl;
 import logger.event.LogEvent;
+import logger.event.LogEventImpl;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,8 +34,17 @@ public class LoggerImpl implements Logger{
     }
 
     @Override
-    public void info(String message) {
+    public Logger getParent() {
+        return this.parent;
+    }
 
+    @Override
+    public void info(String message) {
+        LogEvent event = new LogEventImpl(message, this.name, Thread.currentThread().getName());
+        Logger l = this;
+        for (; l != null; l = l.getParent()) {
+            l.invokeAppender(event);
+        }
     }
 
     @Override
@@ -67,11 +77,13 @@ public class LoggerImpl implements Logger{
         return logger;
     }
 
+    @Override
     public void addAppender(Appender appender){
         aai.addAppender(appender);
     }
 
-    private void invokeAppender(LogEvent logEvent){
+    @Override
+    public void invokeAppender(LogEvent logEvent){
         this.aai.doLoopAppenders(logEvent);
     }
 
